@@ -1,12 +1,11 @@
 __all__ = ['evm_tx_tokens', 'sol_tx_tokens']
 
+from decimal import Decimal
 from dotenv import load_dotenv
 
 load_dotenv()
 
 def evm_tx_tokens(evm_chain, vault_id, destination, custom_note, value, token):
-
-    print(f"Preparing to send {value} {token} on {evm_chain}")
 
     if evm_chain == "arbitrum":
         if token =="usdc":
@@ -16,6 +15,9 @@ def evm_tx_tokens(evm_chain, vault_id, destination, custom_note, value, token):
     elif evm_chain == "bsc":
         if token == "usdt":
             contract_address = "0x55d398326f99059fF775485246999027B3197955"
+            original_value = value  # Store the original value for logging
+            value = str(int(Decimal(value) * Decimal('1000000000000000000')))
+            print(f" Sending {original_value} USDT on BNB Chain!") 
     else:
         contract_address = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" # USDC contract address on Ethereum mainnet
 
