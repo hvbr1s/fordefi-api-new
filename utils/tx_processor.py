@@ -28,18 +28,17 @@ def process_transaction(ecosystem, evm_chain, vault_id, destination, value, cust
             else:
                 smallest_unit = int(Decimal(value) * Decimal('1000000'))  # 6 decimals for other tokens
             assert smallest_unit > 0, f"{token} amount must be positive!"
-            print(f"Sending {value} {token}!")
+            print(f"Sending {value} {token.upper()} on {evm_chain.title()}!")
         else:
             smallest_unit = int(float_value * config["decimals"])
             assert smallest_unit > 0, f"{config['unit_name']} amount must be positive!"
             if evm_chain == 'bsc':
                 print(f"Sending {float_value} BNB!")
             else:
-                print(f"Sending {float_value} {config['unit_name']}")
+                print(f"Sending {float_value} {config['unit_name'].upper()} on {evm_chain.title()}!")
             
         
         if token:
-            print("Checkpoint!")
             tx_functions = {
                 "evm": evm_tx_tokens,
                 "sol": sol_tx_tokens,
