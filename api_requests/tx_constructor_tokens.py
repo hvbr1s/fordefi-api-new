@@ -18,9 +18,12 @@ def evm_tx_tokens(evm_chain, vault_id, destination, custom_note, value, token):
         if token == "usdt":
             contract_address = "0x55d398326f99059fF775485246999027B3197955"
             value = str(int(Decimal(value) * Decimal('1000000000000000000')))  # 18 decimals
+    elif evm_chain == "ethereum":
+        if token == "usdt":
+            contract_address = "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            value = str(int(Decimal(value) * Decimal('1000000')))  # 6 decimals 
     else:
-        contract_address = ""  # USDC contract address on Ethereum mainnet
-        value = str(int(Decimal(value) * Decimal('1000000')))  # 6 decimals
+        contract_address = ""
 
     request_json =  {
     "signer_type": "api_signer",
