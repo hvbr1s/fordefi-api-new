@@ -17,10 +17,10 @@ A tool for executing programmatic transactions through Fordefi.
    ```
 
 3. Configure environment variables:
-   Create a `.env` file in the root directory with the following:
+   Create a `.env` file in the root directory with your Fordefi API user token and your default Vault IDs and destination addresses:
    ```plaintext
    EVM_VAULT_ID="your_vault_id"
-   DEFAULT_DESTINATION_ADDRESS_EVM="your_default_destination_address"
+   DEFAULT_DESTINATION_ADDRESS_EVM="your_default_evm_destination_address"
    FORDEFI_API_TOKEN="your_token"
    ```
 4. Place your API Signer's `.pem` private key file in a `/secret` directory in the root folder.
