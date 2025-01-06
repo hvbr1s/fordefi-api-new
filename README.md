@@ -52,8 +52,8 @@ The transaction will be broadcast after confirming all details.
 ## This tool currently supports the following networks and assets:
 
 - Ethereum (ETH)
-- BSC (BNB)
-- Arbitrum (ARB)
+- BSC (BNB and USDT)
+- Arbitrum (ARB and USDC)
 - Solana (SOL coins only)
 - Sui (SUI coins only)
 - Ton (TON coins only)
