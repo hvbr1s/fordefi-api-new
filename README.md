@@ -2,6 +2,8 @@
 
 A tool for executing programmatic transactions through Fordefi.
 
+⚠️ This tool is still in development, please test extensively before use.
+
 ## Prerequisites
 
 1. Install `uv` package manager:
