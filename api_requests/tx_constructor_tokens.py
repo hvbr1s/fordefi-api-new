@@ -8,16 +8,19 @@ load_dotenv()
 def evm_tx_tokens(evm_chain, vault_id, destination, custom_note, value, token):
 
     if evm_chain == "arbitrum":
-        if token =="usdc":
+        if token == "usdc":
             contract_address = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+            value = str(int(Decimal(value) * Decimal('1000000')))  # 6 decimals
         elif token == "usdt":
             contract_address = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+            value = str(int(Decimal(value) * Decimal('1000000')))  # 6 decimals
     elif evm_chain == "bsc":
         if token == "usdt":
             contract_address = "0x55d398326f99059fF775485246999027B3197955"
-            value = str(int(Decimal(value) * Decimal('1000000000000000000')))
+            value = str(int(Decimal(value) * Decimal('1000000000000000000')))  # 18 decimals
     else:
-        contract_address = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" # USDC contract address on Ethereum mainnet
+        contract_address = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC contract address on Ethereum mainnet
+        value = str(int(Decimal(value) * Decimal('1000000')))  # 6 decimals
 
     request_json =  {
     "signer_type": "api_signer",

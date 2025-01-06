@@ -43,4 +43,11 @@ def get_ecosystem_config(ecosystem):
             "unit_name": "BTC"
         }
     }
+
+    for eco, config in configs.items():
+        # Check destination addresses are set
+        assert config["default_dest"] is not None, f"Missing DEFAULT_DESTINATION_ADDRESS_{config['unit_name']} in environment variables"
+        # Check Vault IDs are set
+        assert os.getenv(config["vault_env"]) is not None, f"Missing {config['vault_env']} in environment variables"
+
     return configs.get(ecosystem)

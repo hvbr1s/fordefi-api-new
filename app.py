@@ -40,6 +40,13 @@ print(f"🚀 Excellent! Sending from vault {vault_id} to {destination} on {ecosy
 
 request_json = process_transaction(ecosystem, evm_chain, vault_id, destination, value, custom_note, token)
 
+# OPTIONAL -> Save request JSON to file (for debugging)
+# timestamp_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+# filename = f"transaction_request_{timestamp_str}.json"
+# with open(filename, 'w') as f:
+#     json.dump(request_json, f, indent=2)
+# print(f"📄 Tx JSON saved to {filename}")
+
 ## Broadcast transaction
 
 access_token = os.getenv("FORDEFI_API_TOKEN")

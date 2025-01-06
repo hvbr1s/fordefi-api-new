@@ -2,6 +2,8 @@
 
 A tool for executing programmatic transactions through Fordefi.
 
+⚠️ This tool is still in development, please test extensively with _small amounts_ before use.
+
 ## Prerequisites
 
 1. Install `uv` package manager:
@@ -17,10 +19,10 @@ A tool for executing programmatic transactions through Fordefi.
    ```
 
 3. Configure environment variables:
-   Create a `.env` file in the root directory with the following:
+   Create a `.env` file in the root directory with your Fordefi API user token and your default Vault IDs and destination addresses:
    ```plaintext
    EVM_VAULT_ID="your_vault_id"
-   DEFAULT_DESTINATION_ADDRESS_EVM="your_default_destination_address"
+   DEFAULT_DESTINATION_ADDRESS_EVM="your_default_evm_destination_address"
    FORDEFI_API_TOKEN="your_token"
    ```
 4. Place your API Signer's `.pem` private key file in a `/secret` directory in the root folder.
@@ -53,7 +55,7 @@ The transaction will be broadcast after confirming all details.
 
 - Ethereum (ETH)
 - BSC (BNB and USDT)
-- Arbitrum (ARB and USDC)
+- Arbitrum (ETH and USDC)
 - Solana (SOL coins only)
 - Sui (SUI coins only)
 - Ton (TON coins only)
