@@ -53,7 +53,7 @@ The transaction will be broadcast after confirming all details.
 
 - Ethereum (ETH)
 - BSC (BNB and USDT)
-- Arbitrum (ARB and USDC)
+- Arbitrum (ETH and USDC)
 - Solana (SOL coins only)
 - Sui (SUI coins only)
 - Ton (TON coins only)
