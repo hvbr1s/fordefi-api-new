@@ -19,7 +19,7 @@ def evm_tx_tokens(evm_chain, vault_id, destination, custom_note, value, token):
             contract_address = "0x55d398326f99059fF775485246999027B3197955"
             value = str(int(Decimal(value) * Decimal('1000000000000000000')))  # 18 decimals
     else:
-        contract_address = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC contract address on Ethereum mainnet
+        contract_address = ""  # USDC contract address on Ethereum mainnet
         value = str(int(Decimal(value) * Decimal('1000000')))  # 6 decimals
 
     request_json =  {
@@ -60,7 +60,7 @@ def sol_tx_tokens(vault_id, destination, custom_note, value, token):
     if token =="usdc":
         program_address = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
     else:
-        program_address = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+        program_address = ""
 
     request_json = {
         "signer_type": "api_signer",
