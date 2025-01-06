@@ -1,12 +1,10 @@
 __all__ = ['process_transaction']
 
+import os
 from decimal import Decimal
 from api_requests.tx_constructor import evm_tx_native, sol_tx_native, sui_tx_native, ton_tx_native, aptos_tx_native, btc_tx_native
 from api_requests.tx_constructor_tokens import evm_tx_tokens, sol_tx_tokens
 from utils.ecosysten_configs import get_ecosystem_config
-from dotenv import load_dotenv
-import os
-load_dotenv()
 
 def process_transaction(ecosystem, evm_chain, vault_id, destination, value, custom_note, token):
     config = get_ecosystem_config(ecosystem)
@@ -24,7 +22,7 @@ def process_transaction(ecosystem, evm_chain, vault_id, destination, value, cust
         float_value = float(value)
         if token:
             if ecosystem == "evm" and token == "usdt":
-                smallest_unit = int(Decimal(value) * Decimal('1000000000000000000'))  # 18 decimals for BSC USDT
+                smallest_unit = int(Decimal(value) * Decimal('1000000000000000000'))  # 18 decimals for USDT
             else:
                 smallest_unit = int(Decimal(value) * Decimal('1000000'))  # 6 decimals for other tokens
             assert smallest_unit > 0, f"{token} amount must be positive!"
