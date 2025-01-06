@@ -61,5 +61,5 @@ def process_transaction(ecosystem, evm_chain, vault_id, destination, value, cust
         else:
             return tx_functions[ecosystem](vault_id, destination, custom_note, str(smallest_unit))
     except ValueError:
-        print(f"❌ Invalid {config['unit_name']} amount provided")
+        print(f"❌ Invalid amount provided or token not supported by this tool yet!")
         exit(1)
