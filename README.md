@@ -2,7 +2,7 @@
 
 A tool for executing programmatic transactions through Fordefi.
 
-⚠️ This tool is still in development, please test extensively before use.
+⚠️ This tool is still in development, please test extensively with _small amounts_ before use.
 
 ## Prerequisites
 
