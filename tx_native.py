@@ -16,14 +16,6 @@ import datetime
 #     response = client.access_secret_version(request={"name": name})
 #     return response.payload.data.decode('UTF-8')
 
-# env_vars = {
-#     'USER_API_TOKEN': access_secret_version('project_id', 'USER_API_TOKEN', 'latest'),
-#     'PRIVATE_KEY_FILE': access_secret_version('project_id', 'PRIVATE_KEY_FILE', 'latest'),
-# }
-
-# os.environ.update(env_vars)
-
-
 ### FUNCTIONS
 
 def broadcast_tx(path, access_token, signature, timestamp, request_body):
@@ -95,6 +87,14 @@ def evm_tx_native(evm_chain, vault_id, destination, custom_note, value):
 
 def sign(payload):
 
+    ## LOCAL USE
+    PRIVATE_KEY_FILE = "./secret/private.pem"
+    with open(PRIVATE_KEY_FILE, "r") as f:
+        signing_key = ecdsa.SigningKey.from_pem(f.read())
+
+    ## GOOGLE CLOUD USE
+    # pem_content = access_secret_version('project_id', 'PRIVATE_KEY_FILE', 'latest')
+    # signing_key = ecdsa.SigningKey.from_pem(pem_content)
 
     signature = signing_key.sign(
         data=payload.encode(), hashfunc=hashlib.sha256, sigencode=ecdsa.util.sigencode_der
@@ -106,7 +106,7 @@ def sign(payload):
 
 ## Set config
 USER_API_TOKEN = os.getenv("FORDEFI_API_TOKEN")
-PRIVATE_KEY_FILE = "./secret/private.pem"
+# USER_API_TOKEN = access_secret_version('project_id', 'USER_API_TOKEN', 'latest') # When using Google Cloud
 evm_chain = "bsc"
 #evm_chain = "ethereum"  
 path = "/api/v1/transactions"
@@ -121,9 +121,7 @@ request_body = json.dumps(request_json)
 timestamp = datetime.datetime.now().strftime("%s")
 payload = f"{path}|{timestamp}|{request_body}"
 
-## Sign transaction with API Signer
-with open(PRIVATE_KEY_FILE, "r") as f:
-    signing_key = ecdsa.SigningKey.from_pem(f.read())
+## Sign transaction with API Signer (local)
 signature = sign(payload=payload)
 
 ## Broadcast tx
