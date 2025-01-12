@@ -85,7 +85,7 @@ def evm_tx_native(evm_chain, vault_id, destination, custom_note, value):
 def sign(payload, project):
 
     ## GOOGLE CLOUD USE
-    pem_content = access_secret_version(project, 'PRIVATE_KEY_FILE', 'latest') 
+    pem_content = access_secret_version(project, 'PRIVATE_KEY_FILE', 'latest') # CHANGE
     signing_key = ecdsa.SigningKey.from_pem(pem_content)
 
     signature = signing_key.sign(
