@@ -111,17 +111,15 @@ def sign(payload, project):
 ### Core logic
 
 ## Set config
-GCP_PROJECT_ID = 'inspired-brand-447513-i8' # CHANGE
+GCP_PROJECT_ID = 'your_project_id' # can be obtained by running `gcloud config list project`in the GCP shell
 USER_API_TOKEN = access_secret_version(GCP_PROJECT_ID, 'USER_API_TOKEN', 'latest') # CHANGE
 evm_chain = "bsc"
-#evm_chain = "ethereum"  
 path = "/api/v1/transactions"
-vault_id = "81e82853-3c4f-4cd4-b494-78fb4abf168a" # CHANGE
-destination = "0xF659feEE62120Ce669A5C45Eb6616319D552dD93" # CHANGE
+vault_id = "your_vault_id" # CHANGE
+destination = "you_destination_address" # CHANGE
 custom_note = "hello!"
 value = "0.0001"
 token_ticker = "usdt"
-#token_ticker = "pepe"
 
 ## Building transaction
 request_json = evm_tx_tokens(evm_chain=evm_chain, vault_id=vault_id, destination=destination, custom_note=custom_note, value=value, token=token_ticker)
