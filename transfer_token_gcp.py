@@ -43,42 +43,55 @@ def broadcast_tx(path, access_token, signature, timestamp, request_body):
         raise RuntimeError(f"Network error occurred: {str(e)}")
 
 
-def evm_tx_native(evm_chain, vault_id, destination, custom_note, value):
+def evm_tx_tokens(evm_chain, vault_id, destination, custom_note, value, token):
 
-    value_in_wei = str(int(float(value) * 10**18))
-    print(f"⚙️ Preparing tx for {value}!")
+    if evm_chain == "bsc":
+        if token == "usdt":
+            contract_address = "0x55d398326f99059fF775485246999027B3197955"
+            value = str(int(Decimal(value) * Decimal('1000000000000000000'))) # 18 decimals
+        else:
+            raise ValueError(f"Token '{token}' is not supported for chain '{evm_chain}'") 
+    elif evm_chain == "ethereum":
+        if token == "usdt":
+            contract_address = "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            value = str(int(Decimal(value) * Decimal('1000000')))  # 6 decimals
+        elif token == "pepe":
+            contract_address = "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
+            value = str(int(Decimal(value) * Decimal('1000000000000000000'))) # 18 decimals
+        else:
+            raise ValueError(f"Token '{token}' is not supported for chain '{evm_chain}'") 
+    else:
+        raise ValueError(f"Token '{token}' is not supported for chain '{evm_chain}'")
 
-    """
-    Native ETH or BNB transfer
-
-    """
-
-    request_json = {
-        "signer_type": "api_signer",
-        "vault_id": vault_id,
-        "note": custom_note,
-        "type": "evm_transaction",
-        "details": {
-            "type": "evm_transfer",
-            "gas": {
-                "type": "priority",
-                "priority_level": "medium"
-            },
-            "to": destination,
-            "asset_identifier": {
-                "type": "evm",
-                "details": {
-                    "type": "native",
-                    "chain": f"evm_{evm_chain}_mainnet"
-                }
-            },
-            "value": {
-                "type": "value",
-                "value": value_in_wei
-            }
+    request_json =  {
+    "signer_type": "api_signer",
+    "type": "evm_transaction",
+    "details": {
+        "type": "evm_transfer",
+        "gas": {
+          "type": "priority",
+          "priority_level": "medium"
+        },
+        "to": destination,
+        "value": {
+           "type": "value",
+           "value": value
+        },
+        "asset_identifier": {
+             "type": "evm",
+             "details": {
+                 "type": "erc20",
+                 "token": {
+                     "chain": f"evm_{evm_chain}_mainnet",
+                     "hex_repr": contract_address
+                 }
+             }
         }
-    }
-    
+    },
+    "note": custom_note,
+    "vault_id": vault_id
+}
+
     return request_json
 
 
@@ -102,13 +115,15 @@ USER_API_TOKEN = access_secret_version(GCP_PROJECT_ID, 'USER_API_TOKEN', 'latest
 evm_chain = "bsc"
 #evm_chain = "ethereum"  
 path = "/api/v1/transactions"
-vault_id = "652a2334-a673-4851-ad86-627781689592" # CHANGE
+vault_id = "81e82853-3c4f-4cd4-b494-78fb4abf168a" # CHANGE
 destination = "0xF659feEE62120Ce669A5C45Eb6616319D552dD93" # CHANGE
 custom_note = "hello!"
 value = "0.0001"
+token_ticker = "usdt"
+#token_ticker = "pepe"
 
 ## Building transaction
-request_json = evm_tx_native(evm_chain=evm_chain, vault_id=vault_id, destination=destination, custom_note=custom_note, value=value)
+request_json = evm_tx_tokens(evm_chain=evm_chain, vault_id=vault_id, destination=destination, custom_note=custom_note, value=value, token=token_ticker)
 request_body = json.dumps(request_json)
 timestamp = datetime.datetime.now().strftime("%s")
 payload = f"{path}|{timestamp}|{request_body}"
